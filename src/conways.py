@@ -6,6 +6,24 @@ WHITE = (255, 255, 255)
 GRAY = (25, 25, 25)
 WIN_SIZE = 500
 
+WIDTH = 20
+HEIGHT = 20
+
+# This sets the margin between each cell
+MARGIN = 15
+
+grid = []
+for row in range(20):
+    # Add an empty array that will hold each cell
+    # in this row
+    grid.append([])
+    for column in range(20):
+        grid[row].append(0)  # Append a cell
+
+grid[9][10] = 1
+grid[10][10] = 1
+grid[11][10] = 1
+
 pygame.init()
  
 # Set the width and height of the screen [width, height]
@@ -29,7 +47,28 @@ while not done:
             done = True
  
     # --- Game logic should go here
-    
+    '''
+    Any live cell with fewer than two live neighbours dies, as if by underpopulation.
+    Any live cell with two or three live neighbours lives on to the next generation.
+    Any live cell with more than three live neighbours dies, as if by overpopulation.
+    Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+    '''
+
+    for cell in grid:
+        if cell == 1:
+            if sum_of_neighbors < 2:
+                return 0
+            elif sum_of_neighbors < 4:
+                return 1
+            else:
+                return 0
+        else:
+            if sum_of_neighbors == 3:
+                return 1
+            else:
+                return 0
+
+
 
  
     # --- Screen-clearing code goes here
@@ -39,6 +78,19 @@ while not done:
     screen.fill(GRAY)
  
     # --- Drawing code should go here
+    for row in range(20):
+        for column in range(20):
+            color = PINK
+            if grid[row][column] == 1:
+                color = BLUE
+            pygame.draw.circle(screen,
+                                color,
+                                (((column+1)*22)+15, 
+                                ((row+1)*22)),
+                                10)
+
+
+ #    circle(surface, color, center, radius)
    
 
     # --- Go ahead and update the screen with what we've drawn.
