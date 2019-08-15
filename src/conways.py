@@ -3,10 +3,11 @@ from pygame.locals import *
 
 pygame.init()
 BLOCK_SIZE = BLOCK_W, BLOCK_H = (8, 8)
-BLOCKS = BLOCKS_COLS, BLOCKS_ROWS = 60,40
+BLOCKS = BLOCKS_COLS, BLOCKS_ROWS = 80,80
 size = width, height = (BLOCK_W * BLOCKS[0], BLOCK_H * BLOCKS[1])
 screen = pygame.display.set_mode(size)
-pygame.display.set_caption("Conway's Game of Life")
+# pygame.display.set_caption("Conway's Game of Life")
+pygame.display.set_caption('Space Bar = Pause/Resume * R key = Reset * Left click while paused will place a cell')
 
 BLACK = (  0,   0,   0)
 RED= (200, 0, 0 )
