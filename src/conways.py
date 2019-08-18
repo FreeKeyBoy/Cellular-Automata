@@ -8,9 +8,20 @@ size = width, height = (BLOCK_W * BLOCKS[0], BLOCK_H * BLOCKS[1])
 screen = pygame.display.set_mode(size)
 # pygame.display.set_caption("Conway's Game of Life")
 pygame.display.set_caption('Space Bar = Pause/Resume * R key = Reset * Left click while paused will place a cell')
+MARGIN = 3
+SQ_LENGTH = 10
+SQ_NUM = 49 # min squares per row/column is 15
+WIN_SIZE = (SQ_NUM+1)*MARGIN + SQ_NUM*SQ_LENGTH
+BTN_SIZE = 30
+generations = 0
+running = True
+
+# Used to manage how fast the screen updates
+clock = pygame.time.Clock()
 
 BLACK = (  0,   0,   0)
 RED= (200, 0, 0 )
+GRAY = (25, 25, 25)
 
 class Grid:
     paused = False
@@ -88,6 +99,16 @@ class Grid:
                         cells[x][y] = False
         self.cells = cells
 
+# Declare some buttons
+font = pygame.font.Font('freesansbold.ttf', 16) 
+
+inc_time_step_button = pygame.draw.rect(screen, (175, 203, 255), pygame.Rect(10,WIN_SIZE+10,3*BTN_SIZE, BTN_SIZE))
+dec_time_step_button = pygame.draw.rect(screen, (175, 203, 255), pygame.Rect(20+3*BTN_SIZE,WIN_SIZE+10,3*BTN_SIZE, BTN_SIZE))
+stop_play_button = pygame.draw.rect(screen, (175, 203, 255), pygame.Rect(30+6*BTN_SIZE,WIN_SIZE+10,3*BTN_SIZE, BTN_SIZE))
+restart_button = pygame.draw.rect(screen, (175, 203, 255), pygame.Rect(40+9*BTN_SIZE,WIN_SIZE+10,3*BTN_SIZE, BTN_SIZE))
+generation_display = pygame.draw.rect(screen, GRAY, pygame.Rect(60+12*BTN_SIZE,WIN_SIZE+10,3*BTN_SIZE, BTN_SIZE))
+
+
 grid = Grid(screen)
 clock = pygame.time.Clock()
 
@@ -107,6 +128,6 @@ while True:
     screen.fill(BLACK)
     grid.draw_grid()
     grid.draw_cells()
-    clock.tick(120)
+    clock.tick(5)
     pygame.display.flip()
     grid.step()
